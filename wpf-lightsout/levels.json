@@ -2,6 +2,16 @@
   {
     "id": 0,
     "name": "Level 0",
+    "columns": 2,
+    "rows": 2,
+    "on": [
+      0,
+      2
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Level 1",
     "columns": 4,
     "rows": 4,
     "on": [
@@ -12,8 +22,8 @@
     ]
   },
   {
-    "id": 1,
-    "name": "Level 1",
+    "id": 2,
+    "name": "Level 2",
     "columns": 5,
     "rows": 5,
     "on": [
@@ -34,8 +44,8 @@
     ]
   },
   {
-    "id": 2,
-    "name": "Level 2",
+    "id": 3,
+    "name": "Level 3",
     "columns": 9,
     "rows": 9,
     "on": [

@@ -30,43 +30,40 @@ namespace wpf_lightsout
         }
 
         //Boolean array which will serve to check if the buttons(lights) are on or off
-        private bool[,] checkLights = new bool[10, 10];
+        private bool[,] checkLights = new bool[20, 20];
 
-        private int gridSize;
-        public const int MaxGridSize = 5;
-        public const int MinGridSize = 3;
-        public int GridSize
+        public int GridSize()
         {
-            get
-            {
-                return gridSize;
-            }
-            set
-            {
+            using StreamReader r = new StreamReader("levels.json");
 
-                        if (value >= MinGridSize && value <= MaxGridSize)
-                        {
-                            gridSize = value;
-                            checkLights = new bool[gridSize, gridSize];
-                            AddLights();
-                        }
- 
+            string json = r.ReadToEnd();
+            var levels = JsonConvert.DeserializeObject<List<Level>>(json);
+
+            foreach (var level in levels)
+            {
+                if (level.Id == ComboBox1.Items.IndexOf(ComboBox1.SelectedItem))
+                {
+                    var gridSize = level.Rows;
+                    return gridSize;
+                }
             }
+            return 0;
         }
+
 
         public void GenerateLights()
         {
-            int rectSize = 5;
+            int rectSize = 30;
 
             //Loop through lights array declared above and generate buttons
-            for (int i = 0; i < GridSize; i++)
+            for (int i = 0; i < GridSize(); i++)
             {
-                for (int j = 0; j < GridSize; j++)
+                for (int j = 0; j < GridSize(); j++)
                 {
                     Rectangle rect = new Rectangle();
                     rect.Fill = Brushes.White;
-                    rect.Width = 10;
-                    rect.Height = 10;
+                    rect.Width = rectSize + 1;
+                    rect.Height = rect.Width + 1;
                     rect.Stroke = Brushes.Black;
                     // Store each row and col as a Point
                     rect.Tag = new Point(i, j);
@@ -130,23 +127,23 @@ namespace wpf_lightsout
             int index = 0;
 
             // Set the colors of the rectangles
-            for (int r = 0; r < GridSize; r++)
+            for (int r = 0; r < GridSize(); r++)
             {
-                for (int c = 0; c < GridSize; c++)
+                for (int c = 0; c < GridSize(); c++)
                 {
                     Rectangle rect = MyCanvas.Children[index] as Rectangle;
                     index++;
                     if (GetGridValue(r, c))
                     {
                         // On
-                        rect.Fill = Brushes.White;
+                        rect.Fill = Brushes.Yellow;
                         rect.Stroke = Brushes.Black;
                     }
                     else
                     {
                         // Off
                         rect.Fill = Brushes.Black;
-                        rect.Stroke = Brushes.White;
+                        rect.Stroke = Brushes.Yellow;
                     }
                 }
             }
@@ -154,17 +151,17 @@ namespace wpf_lightsout
 
         public void Move(int row, int col)
         {
-            if (row < 0 || row >= GridSize || col < 0 || col >= GridSize)
+            if (row < 0 || row >= GridSize() || col < 0 || col >= GridSize())
             {
                 throw new ArgumentException("Row or column is outside the legal range of 0 to "
-                + (GridSize - 1));
+                + (GridSize() - 1));
             }
             // Invert selected box and all surrounding boxes
             for (int i = row - 1; i <= row + 1; i++)
             {
                 for (int j = col - 1; j <= col + 1; j++)
                 {
-                    if (i >= 0 && i < GridSize && j >= 0 && j < GridSize)
+                    if (i >= 0 && i < GridSize() && j >= 0 && j < GridSize())
                     {
                         checkLights[i, j] = !checkLights[i, j];
                     }
@@ -176,9 +173,9 @@ namespace wpf_lightsout
         public bool EndGame()
         {
             //Loop through bool array, to check if lights are on or off
-            for (int i = 0; i < GridSize; i++)
+            for (int i = 0; i < GridSize(); i++)
             {
-                for (int j = 0; j < GridSize; j++)
+                for (int j = 0; j < GridSize(); j++)
                 {
                     // If any light is on, the game still continues
                     // Else the game has finished
