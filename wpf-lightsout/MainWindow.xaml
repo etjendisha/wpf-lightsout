@@ -6,15 +6,19 @@
         xmlns:local="clr-namespace:wpf_lightsout"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Margin="0,54,0,0">
-        <Menu Grid.ColumnSpan="2" Margin="0,-54,0,0">
+    <Grid Name="MyGrid" Margin="0,54,0,0">
+        <Menu Name="MyMenu" Grid.ColumnSpan="2" Margin="0,-54,0,0">
             <ComboBox Name="ComboBox1" Width="136">
                 <ComboBoxItem Content="Level 0"></ComboBoxItem>
                 <ComboBoxItem Content="Level 1"></ComboBoxItem>
                 <ComboBoxItem Content="Level 2"></ComboBoxItem>
                 <ComboBoxItem Content="Level 3"></ComboBoxItem>
             </ComboBox>
-            <Button Content="Generate" HorizontalAlignment="Left" VerticalAlignment="Center" Width="71" Click="StartButton_Click"/>
+            <Button Content="Generate" Width="71" Click="StartButton_Click"/>
+            <Label x:Name="Moves" Width="53">   Moves:
+            </Label>
+            <TextBox Name="MyTextbox"  TextWrapping="Wrap" Text="" Width="59" Height="16"/>
+            <Button Content="Restart" Width="71" Click="RestartButton_Click"/>
         </Menu>
         <Canvas Name="MyCanvas" Width="750" HorizontalAlignment="Center" Margin="-4,-31,0,0" />
     </Grid>

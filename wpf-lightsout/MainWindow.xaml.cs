@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Color = System.Drawing.Color;
+using Label = System.Windows.Controls.Label;
 using Point = System.Windows.Point;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
@@ -102,6 +103,8 @@ namespace wpf_lightsout
             }
         }
 
+        int count = 0;
+
         private void ClickLight(object sender, MouseButtonEventArgs e)
         {
             Rectangle rect = sender as Rectangle;
@@ -111,10 +114,13 @@ namespace wpf_lightsout
             Move(row, col);
             DrawGrid();
 
-            if (EndGame())
+            count++;
+            if(rect != null)
             {
-                MessageBox.Show("You've won!", "You Win!");
+                MyTextbox.Text = count.ToString();
             }
+            
+            EndGame();
         }
 
         public bool GetGridValue(int row, int col)
@@ -170,7 +176,7 @@ namespace wpf_lightsout
         }
 
 
-        public bool EndGame()
+        public void EndGame()
         {
             //Loop through bool array, to check if lights are on or off
             for (int i = 0; i < GridSize(); i++)
@@ -179,17 +185,35 @@ namespace wpf_lightsout
                 {
                     // If any light is on, the game still continues
                     // Else the game has finished
-                    if (checkLights[i, j])
+                    if (checkLights[i, j] == true)
                     {
-                        return false;
+                        return;
                     }
                 }
             }
-            return true;
-            
+
+            MessageBox.Show("You won!", "Press ok to exit!");
+
+            Restart();
         }
 
 
+        public void Restart()
+        {
+            foreach (var item in MyMenu.Items)
+            {
+                if (item.GetType().Equals(typeof(TextBox)))
+                {
+                    MyTextbox.Text = String.Empty;
+                }
+
+                if (item.GetType().Equals(typeof(ComboBox)))
+                {
+                    ComboBox1.SelectedIndex = -1;
+                }
+            }
+            MyCanvas.Children.Clear();
+        }
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
@@ -198,84 +222,9 @@ namespace wpf_lightsout
         }
 
 
-        #region Helper
-        //public void ClickLight(object sender, EventArgs e)
-        //{
-        //    Button light = sender as Button;
-        //    //Get the index of the button clicked
-        //    int i = (int)Char.GetNumericValue(light.Name[0]);
-        //    int j = (int)Char.GetNumericValue(light.Name[1]);
-
-        //    //Change value of clicked button
-        //    ChangeButtonValueHandler(lights[i, j], i, j);
-
-        //    //Check if game has finished
-        //    EndGame();
-        //}
-
-
-        //public void ChangeButtonValueHandler(object sender, int i, int j)
-        //{
-        //    //Change value of the clicked button
-        //    ChangeButtonValue(lights[i, j], i, j);
-
-        //    //Change the value of the correct buttons around the clicked one
-        //    if (i > 0)
-        //    {
-        //        ChangeButtonValue(lights[i - 1, j], i - 1, j);
-        //    }
-        //    if (i < (lights.GetLength(1) - 1))
-        //    {
-        //        ChangeButtonValue(lights[i + 1, j], i + 1, j);
-        //    }
-        //    if (j > 0)
-        //    {
-        //        ChangeButtonValue(lights[i, j - 1], i, j - 1);
-        //    }
-        //    if (j < (lights.GetLength(1) - 1))
-        //    {
-        //        ChangeButtonValue(lights[i, j + 1], i, j + 1);
-        //    }
-
-        //}
-
-        //public void ChangeButtonValue(object sender, int i, int j)
-        //{
-        //    Button b = sender as Button;
-
-        //    //Change the boolean value of the button if it's on or off
-        //    checkLights[i, j] = !checkLights[i, j];
-
-        //    //Set colours of the buttons(lights)
-        //    if (checkLights[i, j] == true)
-        //    {
-        //        b.Background = Brushes.Yellow;
-        //    }
-        //    else
-        //    {
-        //        b.Background = Brushes.Black;
-        //    }
-
-        //}
-
-        //public void EndGame()
-        //{
-        //    //Loop through bool array, to check if lights are on or off
-        //    for (int i = 0; i < checkLights.GetLength(1); i++)
-        //    {
-        //        for (int j = 0; j < checkLights.GetLength(0); j++)
-        //        {
-        //            // If any light is on, the game still continues
-        //            // Else the game has finished
-        //            if (checkLights[i, j] == true)
-        //            {
-        //                return;
-        //            }
-        //        }
-        //    }
-
-        //    MessageBox.Show("You won!", "Press ok to exit!");
-        //}
-        #endregion
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
+        {
+            Restart();
+        }
     }
 }
