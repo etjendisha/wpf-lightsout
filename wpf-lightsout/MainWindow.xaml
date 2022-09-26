@@ -1,0 +1,18 @@
+﻿<Window x:Class="wpf_lightsout.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpf_lightsout"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Canvas Name="MyCanvas">
+        <ComboBox Name="ComboBox1" Width="136" Canvas.Left="10" Canvas.Top="402" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <ComboBoxItem Content="Level 0"></ComboBoxItem>
+            <ComboBoxItem Content="Level 1"></ComboBoxItem>
+            <ComboBoxItem Content="Level 2"></ComboBoxItem>
+        </ComboBox>
+        <Button Content="Button" Canvas.Left="164" Canvas.Top="402" HorizontalAlignment="Left" VerticalAlignment="Center" Width="71" Click="StartButton_Click"/>
+
+    </Canvas>
+</Window>
