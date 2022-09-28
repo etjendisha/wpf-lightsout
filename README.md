@@ -42,6 +42,10 @@ In the moves textbox, it is shown how many times has the user clicked to complet
 
 
 After the game is complete, a message that 'You Won!' is shown in the screen.\
+![image](https://user-images.githubusercontent.com/68497389/192873859-5328d694-8285-459f-b4d8-dd8d7d965c73.png)\
+
+
+
 By clicking the OK button, the game starts again and we can select the level and start the game again.\
 ![image](https://user-images.githubusercontent.com/68497389/192871560-3efbdd3a-4a00-4ade-a0d8-36b2f7d8f023.png)
 
